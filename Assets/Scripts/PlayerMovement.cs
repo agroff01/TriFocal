@@ -90,4 +90,29 @@ public class PlayerController : MonoBehaviour
             isGrounded = false;
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        TogglePlatform togglePlatformScript = FindObjectOfType<TogglePlatform>();
+        // Check if the collided object has the "RedLens" tag
+        if (other.CompareTag("RedLens"))
+        {
+            if (togglePlatformScript != null)
+            {
+                togglePlatformScript.CollectRedLens();
+            }
+            // Destroy the RedLens 
+            Destroy(other.gameObject); 
+        }
+
+        // Check if the collided object has the "BlueLens" tag
+        if (other.CompareTag("BlueLens"))
+        {
+            if (togglePlatformScript != null)
+            {
+                togglePlatformScript.CollectBlueLens();
+            }
+            // Destroy the BlueLens 
+            Destroy(other.gameObject);
+        }
+    }
 }
