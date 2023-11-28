@@ -1,15 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class PlayerController : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     // Player Parameters
+    private bool canControl = true;
     public float moveSpeed = 5f;
-    public float sprintSpeed = 10f; // New sprint speed
+    public float sprintSpeed = 10f;
     public float rotationSpeed = 100f;
     public float jumpForce = 5f;
     private bool isGrounded;
+
+    public bool isFalling = false;
+    private float fallTime = 0f;
+    public float maxFallTime = 3f;
 
     private Rigidbody rb;
 
@@ -23,7 +29,11 @@ public class PlayerController : MonoBehaviour
         // Only handle input if the object is active
         if (gameObject.activeSelf)
         {
-            HandleInput();
+            if(canControl)
+            {
+                HandleInput();
+                CheckFalling();
+            }
         }
     }
 
@@ -49,16 +59,6 @@ public class PlayerController : MonoBehaviour
         // Apply movement to the player with the current speed
         rb.velocity = new Vector3(movement.x * currentMoveSpeed, rb.velocity.y, movement.z * currentMoveSpeed);
 
-        // Rotation with q and e keys
-        if (Input.GetButton("RotateLeft"))
-        {
-            RotatePlayer(-1);
-        }
-        else if (Input.GetButton("RotateRight"))
-        {
-            RotatePlayer(1);
-        }
-
         // Jumping with space key
         CheckGrounded();
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
@@ -66,15 +66,6 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isGrounded = false;
         }
-    }
-
-    void RotatePlayer(float direction)
-    {
-        // Calculate the rotation amount based on direction and rotation speed
-        float rotationAmount = direction * rotationSpeed * Time.deltaTime;
-
-        // Apply rotation to the player
-        transform.Rotate(Vector3.up, rotationAmount);
     }
 
     void CheckGrounded()
@@ -89,6 +80,37 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = false;
         }
+    }
+
+    void CheckFalling()
+    {
+        if (!isGrounded)
+        {
+            isFalling = true;
+            fallTime += Time.deltaTime;
+
+            // Check if the player has been falling for too long
+            if (fallTime >= maxFallTime)
+            {
+                // Call a function to handle the game over logic
+                GameOver();
+            }
+        }
+        else
+        {
+            // Reset falling variables if the player is grounded
+            isFalling = false;
+            fallTime = 0f;
+        }
+    }
+
+    void GameOver()
+    {
+        // Enable the cursor before loading the GameOver scene
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
+        SceneManager.LoadScene("GameOver");
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -114,5 +136,10 @@ public class PlayerController : MonoBehaviour
             // Destroy the BlueLens 
             Destroy(other.gameObject);
         }
+    }
+
+    public void SetPlayerControl(bool enableControl)
+    {
+        canControl = enableControl;
     }
 }

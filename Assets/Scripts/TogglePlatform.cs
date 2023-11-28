@@ -18,7 +18,7 @@ public class TogglePlatform : MonoBehaviour
     private void Update()
     {
         // Temp Toggle with keys
-        if (Input.GetKeyDown(KeyCode.T) && hasRedLens)
+        if (Input.GetKeyDown(KeyCode.R) && hasRedLens)
         {
             ToggleFilter(FilterState.Red);
         }
