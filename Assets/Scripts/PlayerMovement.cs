@@ -114,13 +114,13 @@ public class PlayerMovement : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        TogglePlatform togglePlatformScript = FindObjectOfType<TogglePlatform>();
+        ColorManager togglePlatformScript = FindObjectOfType<ColorManager>();
         // Check if the collided object has the "RedLens" tag
         if (other.CompareTag("RedLens"))
         {
             if (togglePlatformScript != null)
             {
-                togglePlatformScript.CollectRedLens();
+                togglePlatformScript.collectedRedLens();
             }
             // Destroy the RedLens 
             Destroy(other.gameObject); 
@@ -131,7 +131,18 @@ public class PlayerMovement : MonoBehaviour
         {
             if (togglePlatformScript != null)
             {
-                togglePlatformScript.CollectBlueLens();
+                togglePlatformScript.collectedBlueLens();
+            }
+            // Destroy the BlueLens 
+            Destroy(other.gameObject);
+        }
+
+        // Check if the collided object has the "GreenLens" tag
+        if (other.CompareTag("GreenLens"))
+        {
+            if (togglePlatformScript != null)
+            {
+                togglePlatformScript.collectedGreenLens();
             }
             // Destroy the BlueLens 
             Destroy(other.gameObject);
