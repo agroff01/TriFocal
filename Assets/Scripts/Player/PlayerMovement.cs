@@ -16,6 +16,9 @@ public class PlayerMovement : MonoBehaviour
     private float fallTime = 0f;
     public float maxFallTime = 3f;
 
+    public GameObject radialMenu;
+    private bool isMenuVisible = false;
+
     private Rigidbody rb;
     private TimerController timerController;
     private PlayerRespawn playerRespawn;
@@ -40,6 +43,28 @@ public class PlayerMovement : MonoBehaviour
             if (canControl)
             {
                 HandleInput();
+            }
+            // Check if the M key is pressed
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                if (!isMenuVisible)
+                {
+                    // Enable the cursor when the radial menu is visiable
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
+                }
+                else
+                {
+                    // Disable the cursor when the radial menu is not visiable
+                    Cursor.visible = false;
+                    Cursor.lockState = CursorLockMode.Locked;
+                }
+
+                // Toggle the visibility of the radial menu
+                isMenuVisible = !isMenuVisible;
+
+                // Set the visibility of the radial menu canvas
+                SetMenuVisibility(radialMenu, isMenuVisible);
             }
         }
     }
@@ -156,9 +181,19 @@ public class PlayerMovement : MonoBehaviour
             Destroy(other.gameObject);
         }
     }
+
     // Needed to pause player movement in pause script
     public void SetPlayerControl(bool enableControl)
     {
         canControl = enableControl;
+    }
+
+    // Function to set the visibility of the radial menu
+    private void SetMenuVisibility(GameObject menu, bool isVisible)
+    {
+        if (menu != null)
+        {
+            menu.gameObject.SetActive(isVisible);
+        }
     }
 }
