@@ -21,7 +21,8 @@ public class PlayerRespawn : MonoBehaviour
         if (lastRespawnPlatform != null)
         {
             // Respawn above platform
-            transform.position = lastRespawnPlatform.transform.position + Vector3.up; 
+            transform.position = lastRespawnPlatform.transform.position + Vector3.up;
+            transform.position += Vector3.up * 2f;
             currentLives--;
 
             // Update the text

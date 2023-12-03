@@ -16,6 +16,10 @@ public class PlayerMovement : MonoBehaviour
     private float fallTime = 0f;
     public float maxFallTime = 3f;
 
+    public float maxSlowTime = 2.0f;
+    public float slowTimeSpeed = 0.5f;
+
+
     public GameObject radialMenu;
     private bool isMenuVisible = false;
 
@@ -65,6 +69,11 @@ public class PlayerMovement : MonoBehaviour
 
                 // Set the visibility of the radial menu canvas
                 SetMenuVisibility(radialMenu, isMenuVisible);
+            }
+            if(Input.GetKeyDown(KeyCode.G))
+            {
+                slowTime();
+                StartCoroutine(TimeCap());
             }
         }
     }
@@ -195,5 +204,20 @@ public class PlayerMovement : MonoBehaviour
         {
             menu.gameObject.SetActive(isVisible);
         }
+    }
+
+    private void slowTime()
+    {
+        if(Time.timeScale == 1.0f){
+            Time.timeScale = slowTimeSpeed;
+        } else {
+            Time.timeScale = 1.0f;
+        }
+    }
+
+    private IEnumerator TimeCap()
+    {
+        yield return new WaitForSeconds(maxSlowTime);
+        Time.timeScale = 1.0f;
     }
 }
