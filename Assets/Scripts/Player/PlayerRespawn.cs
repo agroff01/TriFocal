@@ -6,29 +6,25 @@ public class PlayerRespawn : MonoBehaviour
 {
     public int maxLives = 3;
     private int currentLives;
+    private GameObject lastRespawnPlatform;
 
-    public TextMeshProUGUI livesText; 
+    public TextMeshProUGUI livesText;
 
     void Start()
     {
         currentLives = maxLives;
-
         UpdateLivesText();
     }
 
     public void Respawn()
     {
-        GameObject[] respawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
-
-        if (respawnPoints.Length > 0)
+        if (lastRespawnPlatform != null)
         {
-            System.Array.Sort(respawnPoints, (x, y) => Vector3.Distance(transform.position, x.transform.position)
-                                                        .CompareTo(Vector3.Distance(transform.position, y.transform.position)));
-
-            transform.position = respawnPoints[0].transform.position;
+            // Respawn above platform
+            transform.position = lastRespawnPlatform.transform.position + Vector3.up; 
             currentLives--;
 
-            // Update the UI text element
+            // Update the text
             UpdateLivesText();
 
             if (currentLives <= 0)
@@ -53,18 +49,23 @@ public class PlayerRespawn : MonoBehaviour
 
     void UpdateLivesText()
     {
-        // Update the UI text element with the current number of lives
+        // Update the UI text with the current number of lives
         if (livesText != null)
         {
             livesText.text = "Lives: " + currentLives;
         }
     }
 
-    void Update()
+    public void FallDetected()
     {
-        if (GetComponent<PlayerMovement>().isFalling)
+        Respawn();
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Respawn"))
         {
-            Respawn();
+            lastRespawnPlatform = other.gameObject;
         }
     }
 }

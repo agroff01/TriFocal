@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -14,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;
 
     public bool isFalling = false;
-    public float fallTime = 0f;
+    private float fallTime = 0f;
     public float maxFallTime = 3f;
 
     private Rigidbody rb;
@@ -101,13 +100,16 @@ public class PlayerMovement : MonoBehaviour
         if (!isGrounded)
         {
             isFalling = true;
-            fallTime += Time.fixedDeltaTime; // Use Time.fixedDeltaTime for physics updates
+            fallTime += Time.fixedDeltaTime;
 
             // Check if the player has been falling for too long
             if (fallTime >= maxFallTime)
             {
-                // Call a function to handle the respawn logic
-                playerRespawn.GameOver();
+                // Notify PlayerRespawn script about falling
+                playerRespawn.FallDetected();
+                // Reset falling variables
+                isFalling = false;
+                fallTime = 0f;
             }
         }
         else
@@ -129,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
                 togglePlatformScript.collectedRedLens();
             }
             // Destroy the RedLens 
-            Destroy(other.gameObject); 
+            Destroy(other.gameObject);
         }
 
         // Check if the collided object has the "BlueLens" tag
@@ -154,7 +156,7 @@ public class PlayerMovement : MonoBehaviour
             Destroy(other.gameObject);
         }
     }
-
+    // Needed to pause player movement in pause script
     public void SetPlayerControl(bool enableControl)
     {
         canControl = enableControl;
