@@ -10,7 +10,7 @@ public class TimerController : MonoBehaviour
     private float startTime;
     private bool isRunning = false;
     private float countdownDuration; 
-    private float elapsedTime;
+    public float elapsedTime;
 
     void OnEnable()
     {
