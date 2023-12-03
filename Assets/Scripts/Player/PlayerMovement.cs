@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public AudioSource boing;
+
     // Player Parameters
     private bool canControl = true;
     public float moveSpeed = 5f;
@@ -110,6 +112,7 @@ public class PlayerMovement : MonoBehaviour
         CheckGrounded();
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
+            boing.Play();
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isGrounded = false;
         }

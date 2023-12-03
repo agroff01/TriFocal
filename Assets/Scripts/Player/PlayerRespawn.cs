@@ -1,9 +1,13 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class PlayerRespawn : MonoBehaviour
 {
+    public AudioSource fallingSound;
+    public Animator fading;
+
     public int maxLives = 3;
     private int currentLives;
     private GameObject lastRespawnPlatform;
@@ -59,7 +63,14 @@ public class PlayerRespawn : MonoBehaviour
 
     public void FallDetected()
     {
-        Respawn();
+        fading.Play("FadeIn");
+        fallingSound.Play();
+        Respawn(); 
+    }
+
+    private IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(1.0f);
     }
 
     void OnTriggerEnter(Collider other)
