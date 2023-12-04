@@ -93,6 +93,10 @@ public class ColorManager : MonoBehaviour
                     postProcessVolume.profile = greenProfile;
                     break;                    
             }
+            for (int i = 0; i < inactiveObjects.Count; i++)
+            {
+                inactiveObjects[i].localColorUpdate();
+            }
         }
     }
 
