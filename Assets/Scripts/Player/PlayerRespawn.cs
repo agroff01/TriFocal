@@ -7,7 +7,8 @@ using System.Collections;
 public class PlayerRespawn : MonoBehaviour
 {
     public AudioSource fallingSound;
-    public Animator fading;
+
+    public FadeEffect screenFade;
 
     public int maxLives = 3;
     private int currentLives;
@@ -19,6 +20,7 @@ public class PlayerRespawn : MonoBehaviour
     void Start()
     {
         currentLives = maxLives;
+        screenFade = FindObjectOfType<FadeEffect>();
         UpdateLivesText();
     }
 
@@ -66,7 +68,22 @@ public class PlayerRespawn : MonoBehaviour
 
     public void FallDetected()
     {
-        Respawn(); 
+        StartCoroutine(FallSequence());
+    }
+
+    IEnumerator FallSequence()
+    {
+        // Play falling sound or other effects
+        fallingSound.Play();
+
+        // Fade out
+        yield return StartCoroutine(screenFade.FadeOut());
+
+        // Respawn
+        Respawn();
+
+        // Fade in
+        yield return StartCoroutine(screenFade.FadeIn());
     }
 
     void OnTriggerEnter(Collider other)
