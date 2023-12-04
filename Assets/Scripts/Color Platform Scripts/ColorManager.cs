@@ -96,7 +96,7 @@ public class ColorManager : MonoBehaviour
         }
     }
 
-    bool setColorToRed(){
+    public bool setColorToRed(){
        if (hasRedLens){
             currentFilterState = FilterState.Red;
             applyColorFilter(currentFilterState);
@@ -105,7 +105,7 @@ public class ColorManager : MonoBehaviour
        return false;
     }
 
-    bool setColorToBlue()
+    public bool setColorToBlue()
     {
         if (hasBlueLens)
         {
@@ -116,7 +116,7 @@ public class ColorManager : MonoBehaviour
         return false;
     }
 
-    bool setColorToGreen()
+    public bool setColorToGreen()
     {
         if (hasGreenLens)
         {
@@ -127,7 +127,7 @@ public class ColorManager : MonoBehaviour
         return false;
     }
 
-    bool setColorToNormal()
+    public bool setColorToNormal()
     {
         currentFilterState = FilterState.Normal;
         applyColorFilter(currentFilterState);
