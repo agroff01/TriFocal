@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 5f;
     private bool isGrounded;
 
+    public float Offset = 1.0f;
+
     public bool isFalling = false;
     private float fallTime = 0f;
     public float maxFallTime = 3f;
@@ -39,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         // Only handle input if the object is active
+        
         if (gameObject.activeSelf)
         {
             // Check if the countdown timer has reached zero
@@ -92,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
         float vertical = Input.GetAxis("Vertical");
 
         // Check if the shift key is held down to sprint and if the player is grounded
-        bool isSprinting = (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && isGrounded;
+        bool isSprinting = (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift));// && isGrounded;
 
         // Choose the speed based on whether the player is sprinting
         float currentMoveSpeed = isSprinting ? sprintSpeed : moveSpeed;
@@ -121,8 +124,25 @@ public class PlayerMovement : MonoBehaviour
     void CheckGrounded()
     {
         RaycastHit hit;
-        float rayLength = 2f;
+        float rayLength = 2.0f;
+        //No Shift
         if (Physics.Raycast(transform.position, Vector3.down, out hit, rayLength))
+        {
+            isGrounded = true;
+        }
+        else if (Physics.Raycast(transform.position + Vector3.left * Offset + Vector3.up * 0.5f, Vector3.down, out hit, rayLength))
+        {
+            isGrounded = true;
+        }
+        else if (Physics.Raycast(transform.position + Vector3.right * Offset + Vector3.up * 0.5f, Vector3.down, out hit, rayLength))
+        {
+            isGrounded = true;
+        }
+        else if (Physics.Raycast(transform.position + Vector3.forward * Offset + Vector3.up * 0.5f, Vector3.down, out hit, rayLength))
+        {
+            isGrounded = true;
+        } 
+        else if (Physics.Raycast(transform.position - Vector3.forward * Offset + Vector3.up * 0.5f, Vector3.down, out hit, rayLength))
         {
             isGrounded = true;
         }

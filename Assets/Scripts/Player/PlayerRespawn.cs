@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using System.Collections;
 
 public class PlayerRespawn : MonoBehaviour
@@ -10,6 +11,7 @@ public class PlayerRespawn : MonoBehaviour
 
     public int maxLives = 3;
     private int currentLives;
+    public Slider slide;
     private GameObject lastRespawnPlatform;
 
     public TextMeshProUGUI livesText;
@@ -28,6 +30,7 @@ public class PlayerRespawn : MonoBehaviour
             transform.position = lastRespawnPlatform.transform.position + Vector3.up;
             transform.position += Vector3.up * 2f;
             currentLives--;
+            slide.value = currentLives;
 
             // Update the text
             UpdateLivesText();
@@ -63,14 +66,7 @@ public class PlayerRespawn : MonoBehaviour
 
     public void FallDetected()
     {
-        fading.Play("FadeIn");
-        fallingSound.Play();
         Respawn(); 
-    }
-
-    private IEnumerator Wait()
-    {
-        yield return new WaitForSeconds(1.0f);
     }
 
     void OnTriggerEnter(Collider other)
