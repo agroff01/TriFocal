@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.UI;
 
 
 public class ColorManager : MonoBehaviour
@@ -14,6 +15,7 @@ public class ColorManager : MonoBehaviour
     private bool hasRedLens = false;
     private bool hasBlueLens = false;
     private bool hasGreenLens = false;
+    private bool defaultLens = true;
 
     public enum FilterState { Normal, Red, Blue, Green }
     [HideInInspector]
@@ -21,6 +23,13 @@ public class ColorManager : MonoBehaviour
 
     [SerializeField]
     private PostProcessProfile normalProfile, redProfile, blueProfile, greenProfile;
+
+    [SerializeField]
+    private Image redButtonCover;
+    [SerializeField]
+    private Image blueButtonCover;
+    [SerializeField]
+    private Image greenButtonCover;
 
     [HideInInspector]
     public bool runColorUpdate = false;
@@ -34,6 +43,22 @@ public class ColorManager : MonoBehaviour
             ColorManager.Instance = this;
         } else {
             Destroy(this);
+        }
+
+        // Initialize lens images
+        if (redButtonCover != null)
+        {
+            redButtonCover.enabled = !hasRedLens;
+        }
+
+        if (blueButtonCover != null)
+        {
+            blueButtonCover.enabled = !hasBlueLens;
+        }
+
+        if (greenButtonCover != null)
+        {
+            greenButtonCover.enabled = !hasGreenLens;
         }
     }
 
@@ -59,7 +84,8 @@ public class ColorManager : MonoBehaviour
             setColorToGreen();
             runColorUpdate = true;
         }
-        if (Input.GetKeyDown(KeyCode.N)){
+        if (Input.GetKeyDown(KeyCode.N))
+        {
             setColorToNormal();
             runColorUpdate = true;
         }
@@ -92,10 +118,6 @@ public class ColorManager : MonoBehaviour
                 case FilterState.Green:
                     postProcessVolume.profile = greenProfile;
                     break;                    
-            }
-            for (int i = 0; i < inactiveObjects.Count; i++)
-            {
-                inactiveObjects[i].localColorUpdate();
             }
         }
     }
@@ -141,18 +163,50 @@ public class ColorManager : MonoBehaviour
     public bool collectedRedLens(){
         hasRedLens = true;
         Debug.Log("RedLens collected! You can now toggle the red filter.");
+        // Toggle off the red lens image
+        if (redButtonCover != null)
+        {
+            redButtonCover.enabled = false;
+        }
         return true;
     }
 
     public bool collectedGreenLens(){
         hasGreenLens = true;
         Debug.Log("GreenLens collected! You can now toggle the Green filter.");
+        // Toggle off the green lens image
+        if (greenButtonCover != null)
+        {
+            greenButtonCover.enabled = false;
+        }
         return true;
     }
 
     public bool collectedBlueLens(){
         hasBlueLens = true;
         Debug.Log("BlueLens collected! You can now toggle the blue filter.");
+        // Toggle off the blue lens image
+        if (blueButtonCover != null)
+        {
+            blueButtonCover.enabled = false;
+        }
         return true;
+    }
+
+    public bool HasLensColor(FilterState targetFilter)
+    {
+        switch (targetFilter)
+        {
+            case FilterState.Normal:
+                return defaultLens;
+            case FilterState.Red:
+                return hasRedLens;
+            case FilterState.Blue:
+                return hasBlueLens;
+            case FilterState.Green:
+                return hasGreenLens;
+            default:
+                return false;
+        }
     }
 }

@@ -7,7 +7,12 @@ public class StartGame : MonoBehaviour
 {
     public void StartSelectedGame()
     {
+        AudioManager audioManager = FindObjectOfType<AudioManager>();
+        if (audioManager != null)
+        {
+            audioManager.StopAudio();
+        }
+
         SceneManager.LoadScene("GameScene");
     }
-
 }
