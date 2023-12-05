@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 5f;
     private bool isGrounded;
 
-    public float Offset = 1.0f;
+    public float Offset = 0.5f;
 
     public bool isFalling = false;
     private float fallTime = 0f;
@@ -125,24 +125,25 @@ public class PlayerMovement : MonoBehaviour
     {
         RaycastHit hit;
         float rayLength = 1.0f;
+        float secondrayLength = 1.5f;
         //No Shift
         if (Physics.Raycast(transform.position, Vector3.down, out hit, rayLength))
         {
             isGrounded = true;
         }
-        else if (Physics.Raycast(transform.position + Vector3.left * Offset + Vector3.up * 0.5f, Vector3.down, out hit, rayLength))
+        else if (Physics.Raycast(transform.position + Vector3.left * Offset + Vector3.up * 0.5f, Vector3.down, out hit, secondrayLength))
         {
             isGrounded = true;
         }
-        else if (Physics.Raycast(transform.position + Vector3.right * Offset + Vector3.up * 0.5f, Vector3.down, out hit, rayLength))
+        else if (Physics.Raycast(transform.position + Vector3.right * Offset + Vector3.up * 0.5f, Vector3.down, out hit, secondrayLength))
         {
             isGrounded = true;
         }
-        else if (Physics.Raycast(transform.position + Vector3.forward * Offset + Vector3.up * 0.5f, Vector3.down, out hit, rayLength))
+        else if (Physics.Raycast(transform.position + Vector3.forward * Offset + Vector3.up * 0.5f, Vector3.down, out hit, secondrayLength))
         {
             isGrounded = true;
         } 
-        else if (Physics.Raycast(transform.position - Vector3.forward * Offset + Vector3.up * 0.5f, Vector3.down, out hit, rayLength))
+        else if (Physics.Raycast(transform.position - Vector3.forward * Offset + Vector3.up * 0.5f, Vector3.down, out hit, secondrayLength))
         {
             isGrounded = true;
         }
