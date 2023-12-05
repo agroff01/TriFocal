@@ -17,6 +17,8 @@ public class ColorManager : MonoBehaviour
     private bool hasGreenLens = false;
     private bool defaultLens = true;
 
+    private bool allLensesCollected = false;
+
     public enum FilterState { Normal, Red, Blue, Green }
     [HideInInspector]
     public FilterState currentFilterState = FilterState.Normal;
@@ -120,6 +122,10 @@ public class ColorManager : MonoBehaviour
                     break;                    
             }
         }
+        for (int i = 0; i < inactiveObjects.Count; i++)
+        {
+            inactiveObjects[i].localColorUpdate();
+        }
     }
 
     public bool setColorToRed(){
@@ -191,6 +197,17 @@ public class ColorManager : MonoBehaviour
             blueButtonCover.enabled = false;
         }
         return true;
+    }
+
+    public bool AllLensesCollected()
+    {
+        if (!allLensesCollected && hasRedLens && hasBlueLens && hasGreenLens)
+        {
+            allLensesCollected = true;
+            Debug.Log("All lenses collected!");
+        }
+
+        return allLensesCollected;
     }
 
     public bool HasLensColor(FilterState targetFilter)

@@ -5,8 +5,8 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     private static AudioManager instance;
-
     public AudioClip defaultAudioClip;
+    
     private AudioSource audioSource;
 
     void Awake()
@@ -19,7 +19,6 @@ public class AudioManager : MonoBehaviour
         }
 
         instance = this;
-        DontDestroyOnLoad(gameObject);
 
         // Add an AudioSource component
         audioSource = GetComponent<AudioSource>();

@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class StartGame : MonoBehaviour
 {
+    public AudioClip defaultAudioClip;
     public void StartSelectedGame()
     {
         AudioManager audioManager = FindObjectOfType<AudioManager>();
