@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
                 HandleInput();
             }
             // Check if the M key is pressed
-            if (Input.GetKeyDown(KeyCode.M))
+            if (Input.GetKeyDown(KeyCode.Mouse1))
             {
                 if (!isMenuVisible)
                 {
