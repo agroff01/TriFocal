@@ -720,7 +720,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 402170394}
         m_TargetAssemblyTypeName: StartGame, Assembly-CSharp
-        m_MethodName: StartSelectedGame
+        m_MethodName: StartCutScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2059,6 +2059,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultAudioClip: {fileID: 8300000, guid: 2b981c3d2fec64f1c8ed8bc0395199ab, type: 3}
+  fadeDuration: 1
 --- !u!82 &1000164508
 AudioSource:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class StartGame : MonoBehaviour
 {
     public AudioClip defaultAudioClip;
+
     public void StartSelectedGame()
     {
         AudioManager audioManager = FindObjectOfType<AudioManager>();
@@ -15,5 +16,16 @@ public class StartGame : MonoBehaviour
         }
 
         SceneManager.LoadScene("GameScene");
+    }
+
+    public void StartCutScene()
+    {
+        AudioManager audioManager = FindObjectOfType<AudioManager>();
+        if (audioManager != null)
+        {
+            audioManager.StopAudio();
+        }
+
+        SceneManager.LoadScene("OpeningScene");
     }
 }

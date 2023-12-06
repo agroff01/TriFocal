@@ -8,10 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/HowToPlayScene.unity
     guid: f55f1ea04f528f3438d86970f3026651
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/OptionsScene.unity
     guid: 44d148c4cf94db547b997ac256d36fcd
   - enabled: 1
@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Death Scene.unity
     guid: 2b2b0d65a2893e7468bd2f662f62c196
+  - enabled: 1
+    path: Assets/Scenes/OpeningScene.unity
+    guid: 36d9b0707f6094e759e24f6c37af9ebc
   m_configObjects: {}
