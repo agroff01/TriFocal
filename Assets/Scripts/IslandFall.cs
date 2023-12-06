@@ -22,11 +22,11 @@ public class IslandFall : MonoBehaviour
     IEnumerator Falling()
     {
         //space out when islands fall 
-        float randomTime = Random.Range(10f, 30f);
+        float randomTime = Random.Range(10, 50);
 
-        //island not falling?
+        //island is falling
         rb = GetComponent<Rigidbody>();
-        rb.useGravity = true;
+        rb.isKinematic = false;
         
         yield return new WaitForSeconds(randomTime);
     }
