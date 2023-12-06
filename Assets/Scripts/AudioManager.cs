@@ -1,13 +1,15 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
     private static AudioManager instance;
     public AudioClip defaultAudioClip;
-    
+
     private AudioSource audioSource;
+
+    // Duration of the fade-out and fade-in effects
+    public float fadeDuration = 1.0f;
 
     void Awake()
     {
@@ -42,21 +44,69 @@ public class AudioManager : MonoBehaviour
             // Check if the audio source is playing and the clip is not the default audio clip
             if (audioSource.isPlaying && audioSource.clip != defaultAudioClip)
             {
-                audioSource.Stop();
+                StartCoroutine(FadeOutAndStop());
             }
         }
     }
 
     public void PlayNewAudio(AudioClip newAudioClip)
     {
-        // Stop the current audio before playing the new one
-        StopAudio(); 
+        // Start the crossfade
+        StartCoroutine(Crossfade(newAudioClip));
+    }
 
+    IEnumerator FadeOutAndStop()
+    {
+        float startVolume = audioSource.volume;
+        float elapsedTime = 0f;
+
+        while (audioSource.volume > 0)
+        {
+            audioSource.volume = Mathf.Lerp(startVolume, 0f, 1 - Mathf.Pow(10, Mathf.Log10(1 + elapsedTime) / fadeDuration));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        audioSource.Stop();
+        audioSource.volume = startVolume;
+    }
+
+    IEnumerator Crossfade(AudioClip newAudioClip)
+    {
+        float startVolume = audioSource.volume;
+        float elapsedTime = 0f;
+
+        // Determine the overlap duration
+        float overlapDuration = fadeDuration * 0.5f;
+
+        // Play the new audio clip before the old one completely fades out
         if (newAudioClip != null)
         {
-            // Play the new audio clip
             audioSource.clip = newAudioClip;
             audioSource.Play();
         }
+
+        // Continue fading out the old audio while the new one is playing
+        while (elapsedTime < fadeDuration)
+        {
+            float targetVolume = Mathf.Lerp(0f, startVolume, elapsedTime / (fadeDuration - overlapDuration));
+
+            // If the new audio is still playing, adjust its volume as well
+            if (audioSource.isPlaying)
+            {
+                float newAudioVolume = Mathf.Lerp(0f, startVolume, elapsedTime / overlapDuration);
+                audioSource.volume = Mathf.Max(targetVolume, newAudioVolume);
+            }
+            else
+            {
+                audioSource.volume = targetVolume;
+            }
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        audioSource.volume = startVolume;
     }
+
 }

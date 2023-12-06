@@ -14,7 +14,9 @@ public class Radial_Buttons : MonoBehaviour
     public AudioClip blueAudioClip;
     public AudioClip greenAudioClip;
     public AudioClip defaultAudioClip;
-    
+
+    private AudioClip currentAudioClip;
+
     private bool canInteract = true;
 
     void Start()
@@ -46,9 +48,10 @@ public class Radial_Buttons : MonoBehaviour
     {
         CM.setColorToNormal();
         // Play the default audio clip only if the normal lens has been collected and audio interaction is allowed
-        if (audioManager != null && CM.HasLensColor(ColorManager.FilterState.Normal) && canInteract == true)
+        if (audioManager != null && CM.HasLensColor(ColorManager.FilterState.Normal) && currentAudioClip != defaultAudioClip && canInteract == true)
         {
             audioManager.PlayNewAudio(defaultAudioClip);
+            currentAudioClip = defaultAudioClip;
         }
     }
 
@@ -56,9 +59,10 @@ public class Radial_Buttons : MonoBehaviour
     {
         CM.setColorToRed();
         // Play the red audio clip only if the red lens has been collected and audio interaction is allowed
-        if (audioManager != null && CM.HasLensColor(ColorManager.FilterState.Red) && canInteract == true)
+        if (audioManager != null && CM.HasLensColor(ColorManager.FilterState.Red) && currentAudioClip != redAudioClip && canInteract == true)
         {
             audioManager.PlayNewAudio(redAudioClip);
+            currentAudioClip = redAudioClip;
         }
     }
 
@@ -66,9 +70,10 @@ public class Radial_Buttons : MonoBehaviour
     {
         CM.setColorToBlue();
         // Play the blue audio clip only if the blue lens has been collected and audio interaction is allowed
-        if (audioManager != null && CM.HasLensColor(ColorManager.FilterState.Blue) && canInteract == true)
+        if (audioManager != null && CM.HasLensColor(ColorManager.FilterState.Blue) && currentAudioClip != blueAudioClip && canInteract == true)
         {
             audioManager.PlayNewAudio(blueAudioClip);
+            currentAudioClip = blueAudioClip;
         }
     }
 
@@ -76,9 +81,10 @@ public class Radial_Buttons : MonoBehaviour
     {
         CM.setColorToGreen();
         // Play the green audio clip only if the green lens has been collected and audio interaction is allowed
-        if (audioManager != null && CM.HasLensColor(ColorManager.FilterState.Green) && canInteract == true)
+        if (audioManager != null && CM.HasLensColor(ColorManager.FilterState.Green) && currentAudioClip != greenAudioClip && canInteract == true)
         {
             audioManager.PlayNewAudio(greenAudioClip);
+            currentAudioClip = greenAudioClip;
         }
     }
 }

@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 
     public AudioClip finalAudioClip;
 
+    private bool finalAudioPlayed = false;
+
     void Start()
     {
         // Ensure the ColorManager is present
@@ -30,14 +32,14 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (rad.CheckInteraction() == false)
+        if (!finalAudioPlayed && rad.CheckInteraction() == false)
         {
             if (colorManager.AllLensesCollected())
             {
                 PlaySpecialAudio();
+                finalAudioPlayed = true;
             }
         }
-        
     }
 
     private void PlaySpecialAudio()
