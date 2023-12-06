@@ -35,7 +35,7 @@ public class ColorObject : MonoBehaviour
 
         gameObject.SetActive(Normal);
 
-        currentState.enterState(gameObject);
+        currentState.enterState(this);
 
         ColorManager.Instance.existingColorObjects.Add(this);
         if (Green) {
@@ -43,6 +43,7 @@ public class ColorObject : MonoBehaviour
             MeshRenderer meshRen = gameObject.GetComponent<MeshRenderer>();
             List<Material> mats = new List<Material>();
             meshRen.GetMaterials(mats);
+            greenVineGrowthMat.SetFloat("_Grow_Level", 0f);
             mats.Add(greenVineGrowthMat);
             meshRen.SetMaterials(mats);
         }
@@ -59,25 +60,25 @@ public class ColorObject : MonoBehaviour
         switch (ColorManager.Instance.currentFilterState) {
             case ColorManager.FilterState.Normal:
                 if (Normal) SwapLocalObjectState(normalState);
-                else { if (currentState != null) currentState.exitState(gameObject);  currentState = null;  gameObject.SetActive(false); }
+                else { if (currentState != null) currentState.exitState(this);  currentState = null;  gameObject.SetActive(false); }
                 break;
 
             case ColorManager.FilterState.Blue:
                 if (Blue) SwapLocalObjectState(blueState);
                 else if (Normal) SwapLocalObjectState(normalState);
-                else { if (currentState != null) currentState.exitState(gameObject); currentState = null; gameObject.SetActive(false); }
+                else { if (currentState != null) currentState.exitState(this); currentState = null; gameObject.SetActive(false); }
                 break;
 
             case ColorManager.FilterState.Green:
                 if (Green) SwapLocalObjectState(greenState);
                 else if (Normal) SwapLocalObjectState(normalState);
-                else { if (currentState != null) currentState.exitState(gameObject); currentState = null; gameObject.SetActive(false); }
+                else { if (currentState != null) currentState.exitState(this); currentState = null; gameObject.SetActive(false); }
                 break;
 
             case ColorManager.FilterState.Red:
                 if (Red) SwapLocalObjectState(redState);
                 else if (Normal) SwapLocalObjectState(normalState);
-                else { if (currentState != null) currentState.exitState(gameObject); currentState = null; gameObject.SetActive(false); }
+                else { if (currentState != null) currentState.exitState(this); currentState = null; gameObject.SetActive(false); }
                 break;
 
         }
@@ -87,10 +88,10 @@ public class ColorObject : MonoBehaviour
 
     void SwapLocalObjectState(ColorState s) {
         if (s == currentState || s == null) return;
-        if (currentState != null) currentState.exitState(gameObject);
+        if (currentState != null) currentState.exitState(this);
         //Debug.Log("Leaving :" + currentState);
         currentState = s;
-        currentState.enterState(gameObject);
+        currentState.enterState(this);
     }
 
     
@@ -101,8 +102,8 @@ public class ColorObject : MonoBehaviour
 public abstract class ColorState
 {
 
-    public abstract void enterState(GameObject o);
-    public abstract void exitState(GameObject o);
+    public abstract void enterState(ColorObject o);
+    public abstract void exitState(ColorObject o);
 }
 
 
@@ -113,32 +114,31 @@ public abstract class ColorState
 
 
 class GreenColorState : ColorState {
-    public override void enterState(GameObject o){
+    public override void enterState(ColorObject o){
 
-        // Apply A slight green tint to the object to draw the player's eye
-        
 
-        VineGrowth.Instance.StartVineGrowthForMaterial(o.GetComponent<ColorObject>().greenVineGrowthMat);
+        Debug.Log(o.greenVineGrowthMat);
+        VineGrowth.Instance.StartVineGrowthForMaterial(o.greenVineGrowthMat);
     }
 
-    public override void exitState(GameObject o) {
-        Material mat = o.GetComponent<ColorObject>().greenVineGrowthMat;
+    public override void exitState(ColorObject o) {
+        Material mat = o.greenVineGrowthMat;
         Debug.Log(mat.ToString());
         mat.SetFloat("_Grow_Level", 0f);
     }
 }
 class RedColorState : ColorState
 {
-    public override void enterState(GameObject o) { }
-    public override void exitState(GameObject o) { }
+    public override void enterState(ColorObject o) { }
+    public override void exitState(ColorObject o) { }
 }
 class BlueColorState : ColorState
 {
-    public override void enterState(GameObject o) { }
-    public override void exitState(GameObject o) { }
+    public override void enterState(ColorObject o) { }
+    public override void exitState(ColorObject o) { }
 }
 class NormalColorState : ColorState
 {
-    public override void enterState(GameObject o) { }
-    public override void exitState(GameObject o) { }
+    public override void enterState(ColorObject o) { }
+    public override void exitState(ColorObject o) { }
 }
