@@ -17,7 +17,7 @@ public class ColorManager : MonoBehaviour
     private bool hasGreenLens = false;
     private bool defaultLens = true;
 
-    private bool allLensesCollected = false;
+    public bool allLensesCollected = false;
 
     public enum FilterState { Normal, Red, Blue, Green }
     [HideInInspector]
