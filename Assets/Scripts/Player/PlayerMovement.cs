@@ -124,8 +124,8 @@ public class PlayerMovement : MonoBehaviour
     void CheckGrounded()
     {
         RaycastHit hit;
-        float rayLength = 1.0f;
-        float secondrayLength = 1.5f;
+        float rayLength = 1.25f;
+        float secondrayLength = 1.75f;
         //No Shift
         if (Physics.Raycast(transform.position, Vector3.down, out hit, rayLength))
         {
