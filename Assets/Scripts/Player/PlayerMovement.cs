@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 5f;
     private bool isGrounded;
 
-    public float Offset = 0.5f;
+    private float Offset = 0.5f;
 
     public bool isFalling = false;
     private float fallTime = 0f;
@@ -23,11 +23,11 @@ public class PlayerMovement : MonoBehaviour
     public float maxSlowTime = 2.0f;
     public float slowTimeSpeed = 0.5f;
 
-
-    public GameObject radialMenu;
     private bool isMenuVisible = false;
 
     private Rigidbody rb;
+    public GameObject radialMenu;
+    private GameObject vine;
     private TimerController timerController;
     private PlayerRespawn playerRespawn;
 
@@ -155,7 +155,7 @@ public class PlayerMovement : MonoBehaviour
 
     void CheckFalling()
     {
-        if (!isGrounded)
+        if (!isGrounded && !IsTouchingVine())
         {
             isFalling = true;
             fallTime += Time.fixedDeltaTime;
@@ -172,7 +172,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            // Reset falling variables if the player is grounded
+            // Reset falling variables if the player is grounded or touching the vine
             isFalling = false;
             fallTime = 0f;
         }
@@ -213,6 +213,17 @@ public class PlayerMovement : MonoBehaviour
             // Destroy the BlueLens 
             Destroy(other.gameObject);
         }
+        // Check if the collided object has the "Vine" tag
+        if (other.CompareTag("Vine"))
+        {
+            vine = other.gameObject;
+        }
+    }
+
+    bool IsTouchingVine()
+    {
+        // Check if the player is in contact with the vine
+        return vine != null && vine.GetComponent<Collider>().bounds.Intersects(GetComponent<Collider>().bounds);
     }
 
     // Needed to pause player movement in pause script

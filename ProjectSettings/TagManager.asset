@@ -9,6 +9,7 @@ TagManager:
   - RedLens
   - BlueLens
   - GreenLens
+  - Vine
   layers:
   - Default
   - TransparentFX
