@@ -12,19 +12,4 @@ public class MenuSelection : MonoBehaviour
         Time.timeScale = 1.0f;
         SceneManager.LoadScene("MainMenu");
     }
-
-    public void HowToPlay()
-    {
-        SceneManager.LoadScene("HowToPlayScene");
-    }
-
-    public void Options()
-    {
-        SceneManager.LoadScene("OptionsScene");
-    }
-
-    public void Credits()
-    {
-        SceneManager.LoadScene("CreditsScene");
-    }
 }
