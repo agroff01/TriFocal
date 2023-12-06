@@ -233,20 +233,6 @@
             },
             "m_InputSlot": {
                 "m_Node": {
-                    "m_Id": "984422b8156542aab1032ba580388fd0"
-                },
-                "m_SlotId": 0
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
-                    "m_Id": "d844196f8c5943b5849f790c4ca7d586"
-                },
-                "m_SlotId": 3
-            },
-            "m_InputSlot": {
-                "m_Node": {
                     "m_Id": "dcfae91d4d8a4c8c9ef6dab9f86b0643"
                 },
                 "m_SlotId": 0

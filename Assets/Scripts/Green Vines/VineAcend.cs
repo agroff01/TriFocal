@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class VineAcend : MonoBehaviour
 {
-    public float launchFactor = 10f;
+    public float BreakingFactor = 10f;
 
     private void OnTriggerStay(Collider other)
     {
@@ -16,7 +16,7 @@ public class VineAcend : MonoBehaviour
     {
         if (other.name == "Player")
         {
-            other.attachedRigidbody.velocity = other.attachedRigidbody.velocity / launchFactor;
+            other.attachedRigidbody.velocity = other.attachedRigidbody.velocity / BreakingFactor;
         }
     }
 }

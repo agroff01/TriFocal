@@ -42,7 +42,7 @@ Material:
     - _BUILTIN_QueueOffset: 0
     - _Clip: 0.839
     - _GrowLevel: 1
-    - _Grow_Level: 0
+    - _Grow_Level: 1.0249996
     - _Scale: 0.39
     - _Smoothness: 0
     - _metalic: 0
