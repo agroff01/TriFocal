@@ -34,9 +34,7 @@ public class ColorManager : MonoBehaviour
     private Image greenButtonCover;
 
     [HideInInspector]
-    public bool runColorUpdate = false;
-    [HideInInspector]
-    public List<ColorObject> inactiveObjects;
+    public List<ColorObject> existingColorObjects;
 
     // Start is called before the first frame update
     void Start()
@@ -67,37 +65,26 @@ public class ColorManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (runColorUpdate)
-            runColorUpdate = false;
-
+        
         // Temp Toggle with keys
         if (Input.GetKeyDown(KeyCode.R) && hasRedLens)
         {
             setColorToRed();
-            runColorUpdate = true;
         }
         if (Input.GetKeyDown(KeyCode.B) && hasBlueLens)
         {
             setColorToBlue();
-            runColorUpdate = true;
         }
         if (Input.GetKeyDown(KeyCode.G) && hasGreenLens)
         {
             setColorToGreen();
-            runColorUpdate = true;
         }
         if (Input.GetKeyDown(KeyCode.N))
         {
             setColorToNormal();
-            runColorUpdate = true;
         }
 
-        // if color update needs to be run, run it on inactive objects
-        if (runColorUpdate) {
-            for (int i = 0;  i < inactiveObjects.Count; i++){
-                inactiveObjects[i].localColorUpdate();
-            }
-        }
+        
     }
 
     void applyColorFilter(FilterState targetFilter) {
@@ -122,9 +109,9 @@ public class ColorManager : MonoBehaviour
                     break;                    
             }
         }
-        for (int i = 0; i < inactiveObjects.Count; i++)
+        for (int i = 0; i < existingColorObjects.Count; i++)
         {
-            inactiveObjects[i].localColorUpdate();
+            existingColorObjects[i].localColorUpdate();
         }
     }
 
@@ -154,6 +141,7 @@ public class ColorManager : MonoBehaviour
         {
             currentFilterState = FilterState.Green;
             applyColorFilter(currentFilterState);
+            //GetComponent<VineGrowth>().StartGrowVines();
             return true;
         }
         return false;

@@ -24,6 +24,9 @@ public class ColorObject : MonoBehaviour
     RedColorState redState = new RedColorState();
     NormalColorState normalState = new NormalColorState();
 
+    [HideInInspector]
+    public Material greenVineGrowthMat;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +37,15 @@ public class ColorObject : MonoBehaviour
 
         currentState.enterState(gameObject);
 
-        ColorManager.Instance.inactiveObjects.Add(this);
+        ColorManager.Instance.existingColorObjects.Add(this);
+        if (Green) {
+            greenVineGrowthMat = Resources.Load("GrowthShader", typeof(Material)) as Material;
+            MeshRenderer meshRen = gameObject.GetComponent<MeshRenderer>();
+            List<Material> mats = new List<Material>();
+            meshRen.GetMaterials(mats);
+            mats.Add(greenVineGrowthMat);
+            meshRen.SetMaterials(mats);
+        }
     }
 
     // Update is called once per frame
@@ -48,33 +59,36 @@ public class ColorObject : MonoBehaviour
         switch (ColorManager.Instance.currentFilterState) {
             case ColorManager.FilterState.Normal:
                 if (Normal) SwapLocalObjectState(normalState);
-                else gameObject.SetActive(false);
+                else { if (currentState != null) currentState.exitState(gameObject);  currentState = null;  gameObject.SetActive(false); }
                 break;
 
             case ColorManager.FilterState.Blue:
                 if (Blue) SwapLocalObjectState(blueState);
                 else if (Normal) SwapLocalObjectState(normalState);
-                else gameObject.SetActive(false);
+                else { if (currentState != null) currentState.exitState(gameObject); currentState = null; gameObject.SetActive(false); }
                 break;
 
             case ColorManager.FilterState.Green:
                 if (Green) SwapLocalObjectState(greenState);
                 else if (Normal) SwapLocalObjectState(normalState);
-                else gameObject.SetActive(false);
+                else { if (currentState != null) currentState.exitState(gameObject); currentState = null; gameObject.SetActive(false); }
                 break;
 
             case ColorManager.FilterState.Red:
                 if (Red) SwapLocalObjectState(redState);
                 else if (Normal) SwapLocalObjectState(normalState);
-                else gameObject.SetActive(false);
+                else { if (currentState != null) currentState.exitState(gameObject); currentState = null; gameObject.SetActive(false); }
                 break;
 
         }
+
+        //Debug.Log("Manager: " + ColorManager.Instance.currentFilterState + "    Local: " + currentState);
     }
 
     void SwapLocalObjectState(ColorState s) {
         if (s == currentState || s == null) return;
-        currentState.exitState(gameObject);
+        if (currentState != null) currentState.exitState(gameObject);
+        //Debug.Log("Leaving :" + currentState);
         currentState = s;
         currentState.enterState(gameObject);
     }
@@ -102,19 +116,15 @@ class GreenColorState : ColorState {
     public override void enterState(GameObject o){
 
         // Apply A slight green tint to the object to draw the player's eye
-        Material newMat = Resources.Load("GreenTint", typeof(Material)) as Material;
-        MeshRenderer meshRen = o.GetComponent<MeshRenderer>();
-        List<Material> mats = new List<Material>();
-        meshRen.GetMaterials(mats);
-        mats.Add(newMat);
-        meshRen.SetMaterials(mats);
+        
+
+        VineGrowth.Instance.StartVineGrowthForMaterial(o.GetComponent<ColorObject>().greenVineGrowthMat);
     }
+
     public override void exitState(GameObject o) {
-        MeshRenderer meshRen = o.GetComponent<MeshRenderer>();
-        List<Material> mats = new List<Material>();
-        meshRen.GetMaterials(mats);
-        mats.RemoveAt(1);
-        meshRen.SetMaterials(mats);
+        Material mat = o.GetComponent<ColorObject>().greenVineGrowthMat;
+        Debug.Log(mat.ToString());
+        mat.SetFloat("_Grow_Level", 0f);
     }
 }
 class RedColorState : ColorState
