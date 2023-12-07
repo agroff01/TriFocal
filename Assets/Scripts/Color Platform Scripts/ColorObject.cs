@@ -116,14 +116,11 @@ public abstract class ColorState
 class GreenColorState : ColorState {
     public override void enterState(ColorObject o){
 
-
-        Debug.Log(o.greenVineGrowthMat);
         VineGrowth.Instance.StartVineGrowthForMaterial(o.greenVineGrowthMat);
     }
 
     public override void exitState(ColorObject o) {
         Material mat = o.greenVineGrowthMat;
-        Debug.Log(mat.ToString());
         mat.SetFloat("_Grow_Level", 0f);
     }
 }
