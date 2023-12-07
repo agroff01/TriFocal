@@ -122,10 +122,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b4094587528f2b40b9904561056fa73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PM: {fileID: 0}
   windForce: 100
-  windBox: {fileID: 693475835689791387}
+  windBase: {fileID: 0}
+  playerPos: {fileID: 0}
   player: {fileID: 0}
-  speedLines: {fileID: 5218516847788708572}
 --- !u!1 &5584756223729520112
 GameObject:
   m_ObjectHideFlags: 0
