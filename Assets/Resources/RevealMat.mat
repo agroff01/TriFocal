@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-9149019898670499614
+--- !u!114 &-3943108201287808674
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RevealEffect
+  m_Name: RevealMat
   m_Shader: {fileID: -6465566751694194690, guid: c06f968088ce1485fb7e73ecd990d1c4, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
