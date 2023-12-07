@@ -34,6 +34,10 @@ public class PlayerMovement : MonoBehaviour
     private TimerController timerController;
     private PlayerRespawn playerRespawn;
 
+
+    private Vector3 movement;
+    private float currentMoveSpeed;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -90,6 +94,13 @@ public class PlayerMovement : MonoBehaviour
     {
         // Check for falling in FixedUpdate to ensure consistent physics updates
         CheckFalling();
+            if (canControl)
+            {
+                if(movement != new Vector3(0.0f ,0.0f ,0.0f)){
+                    Debug.Log(currentMoveSpeed);
+                    rb.AddForce(movement * currentMoveSpeed * (!isGrounded ? airMultiplier : 1));
+                }
+            }
     }
 
     void HandleInput()
@@ -101,7 +112,7 @@ public class PlayerMovement : MonoBehaviour
         bool isSprinting = (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift));// && isGrounded;
 
         // Choose the speed based on whether the player is sprinting
-        float currentMoveSpeed = isSprinting ? sprintSpeed : moveSpeed;
+        currentMoveSpeed = isSprinting ? sprintSpeed : moveSpeed;
 
         // Get the player's local forward and right directions
         // Prevents keys from flipping when player's orientation changes.
@@ -109,11 +120,12 @@ public class PlayerMovement : MonoBehaviour
         Vector3 right = transform.right * horizontal;
 
         // Calculate the movement direction based on the player's local space
-        Vector3 movement = (forward + right).normalized;
+        movement = (forward + right).normalized;
+
         if (isFalling) movement.y = movement.y - .4f;
         // Apply movement to the player with the current speed
         //rb.velocity = new Vector3(movement.x * currentMoveSpeed, rb.velocity.y, movement.z * currentMoveSpeed);
-        rb.AddForce(movement * currentMoveSpeed * (!isGrounded ? airMultiplier : 1));
+        //rb.AddForce(movement * currentMoveSpeed * (!isGrounded ? airMultiplier : 1));
 
         // Jumping with space key
         CheckGrounded();
