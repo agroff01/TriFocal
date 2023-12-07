@@ -12,10 +12,11 @@ public class PlayerMovement : MonoBehaviour
     public float sprintSpeed = 10f;
     public float rotationSpeed = 100f;
     public float jumpForce = 5f;
-    [Range(0f, 2f)]
+    [Range(0f, .3f)]
     public float airMultiplier = .5f;
     private bool isGrounded;
     public float groundDrag;
+    public float airDrag;
     private float Offset = 0.5f;
 
     public bool isFalling = false;
@@ -160,7 +161,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            rb.drag = 0;
+            rb.drag = airDrag;
         }
     }
 

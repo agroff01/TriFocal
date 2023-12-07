@@ -156,7 +156,9 @@ MonoBehaviour:
   sprintSpeed: 15
   rotationSpeed: 100
   jumpForce: 15
-  airMultiplier: 0.5
+  airMultiplier: 0.1
+  groundDrag: 0
+  airDrag: 0
   isFalling: 0
   maxFallTime: 4
   maxSlowTime: 2
