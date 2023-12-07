@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class TimerController : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
-    [SerializeField] public float countdownMinutes = 5f;
+    [SerializeField] public float countdownMinutes = 5.0f;
     private float startTime;
     private bool isRunning = false;
     private float countdownDuration; 
