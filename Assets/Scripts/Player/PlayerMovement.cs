@@ -12,6 +12,8 @@ public class PlayerMovement : MonoBehaviour
     public float sprintSpeed = 10f;
     public float rotationSpeed = 100f;
     public float jumpForce = 5f;
+    [Range(0f, 2f)]
+    public float airMultiplier = .5f;
     private bool isGrounded;
 
     private float Offset = 0.5f;
@@ -107,9 +109,10 @@ public class PlayerMovement : MonoBehaviour
 
         // Calculate the movement direction based on the player's local space
         Vector3 movement = (forward + right).normalized;
-
+        if (isFalling) movement.y = movement.y - .4f;
         // Apply movement to the player with the current speed
-        rb.velocity = new Vector3(movement.x * currentMoveSpeed, rb.velocity.y, movement.z * currentMoveSpeed);
+        //rb.velocity = new Vector3(movement.x * currentMoveSpeed, rb.velocity.y, movement.z * currentMoveSpeed);
+        rb.AddForce(movement * currentMoveSpeed * (!isGrounded ? airMultiplier : 1));
 
         // Jumping with space key
         CheckGrounded();
