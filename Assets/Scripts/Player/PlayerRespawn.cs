@@ -30,7 +30,7 @@ public class PlayerRespawn : MonoBehaviour
         {
             // Respawn above platform
             transform.position = lastRespawnPlatform.transform.position + Vector3.up;
-            transform.position += Vector3.up * 2f;
+            transform.position += Vector3.up * 6.0f;
             currentLives--;
             slide.value = currentLives;
 
