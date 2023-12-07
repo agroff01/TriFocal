@@ -9,7 +9,7 @@ public class VineAcend : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         if (other.name == "Player"){
-            other.attachedRigidbody.velocity = transform.forward + other.attachedRigidbody.velocity;
+            other.attachedRigidbody.velocity = Vector3.up + other.attachedRigidbody.velocity;
         }
     }
     private void OnTriggerExit(Collider other)
