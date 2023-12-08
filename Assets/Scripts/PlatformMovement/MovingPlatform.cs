@@ -13,6 +13,10 @@ public class MovingPlatform : MonoBehaviour
     [SerializeField]
     private float _speed;
 
+    [SerializeField]
+    private float _waitTimeSeconds = 1;
+    private bool _isWaiting;
+
     private int _targetWaypointIndex;
 
     private Transform _previousPoint;
@@ -31,6 +35,7 @@ public class MovingPlatform : MonoBehaviour
 
         float distanceToWaypoint = Vector3.Distance(_previousPoint.position, _targetPoint.position);
         _timeToWaypoint = distanceToWaypoint / _speed;
+        _isWaiting = false;
     }
 
     private void Start()
@@ -40,15 +45,21 @@ public class MovingPlatform : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (_isWaiting) return;
         _elapsedTime += Time.deltaTime;
 
         float elapsedPercent = _elapsedTime / _timeToWaypoint;
         transform.position = Vector3.Lerp(_previousPoint.position, _targetPoint.position, elapsedPercent);
-
         if (elapsedPercent >= 1)
         {
-            TargetNextWaypoint();
+            StartCoroutine(startNewLeg());
+            _isWaiting = true;
         }
+    }
+
+    IEnumerator startNewLeg() {
+        yield return new WaitForSecondsRealtime(_waitTimeSeconds);
+        TargetNextWaypoint();
     }
 
     private void OnCollisionEnter(Collision collision)
