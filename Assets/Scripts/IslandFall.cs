@@ -8,8 +8,8 @@ public class IslandFall : MonoBehaviour
     public ColorManager ColorManager;
     private Rigidbody rb;
 
-    public float minTime = 0;
-    public float maxTime = 100000;
+    public float minSeconds = 0;
+    public float maxSeconds = 100;
 
     // Update is called once per frame
     void Update()
@@ -25,8 +25,8 @@ public class IslandFall : MonoBehaviour
     IEnumerator Falling()
     {
         //space out when islands fall 
-        float randomTime = Random.Range(minTime, maxTime);
-        yield return new WaitForSeconds(randomTime);
+        float randomTime = Random.Range(minSeconds, maxSeconds);
+        yield return new WaitForSecondsRealtime(randomTime);
 
         //island is falling
         rb = GetComponent<Rigidbody>();
