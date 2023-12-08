@@ -27,6 +27,9 @@ public class ColorObject : MonoBehaviour
     [HideInInspector]
     public Material greenVineGrowthMat;
 
+    [HideInInspector]
+    public Material revealMat;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +48,17 @@ public class ColorObject : MonoBehaviour
             meshRen.GetMaterials(mats);
             greenVineGrowthMat.SetFloat("_Grow_Level", 0f);
             mats.Add(greenVineGrowthMat);
+            meshRen.SetMaterials(mats);
+        }
+
+        if (Red)
+        {
+            revealMat = Resources.Load("RevealMat", typeof(Material)) as Material;
+            MeshRenderer meshRen = gameObject.GetComponent<MeshRenderer>();
+            List<Material> mats = new List<Material>();
+            meshRen.GetMaterials(mats);
+            revealMat.SetFloat("_ClipVal", 1f);
+            mats.Add(revealMat);
             meshRen.SetMaterials(mats);
         }
     }
@@ -126,8 +140,13 @@ class GreenColorState : ColorState {
 }
 class RedColorState : ColorState
 {
-    public override void enterState(ColorObject o) { }
-    public override void exitState(ColorObject o) { }
+    public override void enterState(ColorObject o) {
+        RevealEffect.Instance.StartRevealEffectForMaterial(o.revealMat);
+    }
+    public override void exitState(ColorObject o) {
+        Material rev = o.revealMat;
+        rev.SetFloat("_ClipVal", 1f);
+    }
 }
 class BlueColorState : ColorState
 {
