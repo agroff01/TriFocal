@@ -28,6 +28,44 @@ public class Radial_Buttons : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        // Check for left mouse button click
+        if (canInteract && Input.GetMouseButtonDown(0))
+        {
+            // Perform button functionality based on mouse position
+            HandleMouseInput();
+        }
+    }
+
+    private void HandleMouseInput()
+    {
+        // Raycast to check which button is clicked
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            // Check which button is clicked based on the collider or tag
+            if (hit.collider.CompareTag("RedButton"))
+            {
+                RedButton();
+            }
+            else if (hit.collider.CompareTag("BlueButton"))
+            {
+                BlueButton();
+            }
+            else if (hit.collider.CompareTag("GreenButton"))
+            {
+                GreenButton();
+            }
+            else if (hit.collider.CompareTag("DefaultButton"))
+            {
+                DefaultButton();
+            }
+        }
+    }
+
     public bool CheckInteraction()
     {
         // Check if all lenses are collected, disable interaction if true
