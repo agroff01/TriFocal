@@ -14,6 +14,9 @@ public class IslandFall : MonoBehaviour
     private float distance;
 
     // Update is called once per frame
+    void Start(){
+        rb = GetComponent<Rigidbody>();
+    }
     void Update()
     {
         //make sure doesn't start till all lenses are collected
@@ -36,7 +39,6 @@ public class IslandFall : MonoBehaviour
         float distance = gameObject.transform.position.y;
 
         //island is falling
-        rb = GetComponent<Rigidbody>();
         rb.isKinematic = false;
 
 
