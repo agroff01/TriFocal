@@ -62,30 +62,7 @@ public class ColorManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-        // Temp Toggle with keys
-        if (Input.GetKeyDown(KeyCode.R) && hasRedLens)
-        {
-            setColorToRed();
-        }
-        if (Input.GetKeyDown(KeyCode.B) && hasBlueLens)
-        {
-            setColorToBlue();
-        }
-        if (Input.GetKeyDown(KeyCode.G) && hasGreenLens)
-        {
-            setColorToGreen();
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            setColorToNormal();
-        }
-
-        
-    }
+    
 
     void applyColorFilter(FilterState targetFilter) {
         // Apply post-processing profile based on the target filter

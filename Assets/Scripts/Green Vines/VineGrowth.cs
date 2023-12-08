@@ -54,24 +54,13 @@ public class VineGrowth : MonoBehaviour
 
     IEnumerator GrowVines (Material material){
         float growValue = material.GetFloat("_Grow_Level");
-        if(!fullyGrown) {
-            while (growValue < maxGrow)
-            {
-                growValue += 1 / (timeToGrow / updateRate);
-                material.SetFloat("_Grow_Level", growValue);
+        while (growValue < maxGrow)
+        {
+            growValue += 1 / (timeToGrow / updateRate);
+            material.SetFloat("_Grow_Level", growValue);
 
-                yield return new WaitForSeconds(updateRate);
-            }
-        } else {
-            while (growValue > minGrow)
-            {
-                growValue -= 1 / (timeToGrow / updateRate);
-                material.SetFloat("_Grow_Level", growValue);
-
-                yield return new WaitForSeconds(updateRate);
-            }
+            yield return new WaitForSeconds(updateRate);
         }
-        if (growValue >= maxGrow) fullyGrown = false;
-        else fullyGrown = false;
+        
     }
 }
