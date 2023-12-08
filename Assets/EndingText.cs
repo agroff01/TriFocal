@@ -7,24 +7,19 @@ using System;
 
 public class EndingText : MonoBehaviour
 {
-    public TMP_Text textDisplay;
     public float delayBetweenTexts = 1f; // Delay between each text display
 
-    public string[] texts;
+    public TMP_Text[] text;
     private int currentIndex = 0;
 
     public ColorManager ColorManager;
-    // public TMP_Text first;
-    // public TMP_Text second;
-    // public TMP_Text third;
-    // public TMP_Text fourth;
-    // Start is called before the first frame update
+
     void Start()
     {
-        // first.enabled = !first.enabled;
-        // second.enabled = !second.enabled;
-        // third.enabled = !third.enabled;
-        // fourth.enabled = !fourth.enabled;
+        text[0].enabled = !text[0].enabled;
+        text[1].enabled = !text[1].enabled;
+        text[2].enabled = !text[2].enabled;
+        text[3].enabled = !text[3].enabled;
     }
 
     // Update is called once per frame
@@ -32,26 +27,17 @@ public class EndingText : MonoBehaviour
     {
         if(ColorManager.allLensesCollected)
         {
-            
+            StartCoroutine(PrintTexts());
         }
     }
 
-
-
-    // private void Start()
-    // {
-    //     StartCoroutine(PrintTexts());
-    // }
-
     private IEnumerator PrintTexts()
     {
-        foreach (string textToDisplay in texts)
+        while(currentIndex < 4)
         {
-            textDisplay.text = textToDisplay;
+            text[currentIndex].enabled = !text[currentIndex].enabled;
             yield return new WaitForSeconds(delayBetweenTexts);
+            currentIndex++;
         }
-
-        // Optional: Do something after all texts are displayed
-        Debug.Log("All texts displayed");
     }
 }
