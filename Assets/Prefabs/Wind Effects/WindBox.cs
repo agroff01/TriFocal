@@ -6,24 +6,30 @@ public class WindBox : MonoBehaviour
 {
     public float windForce;
     public Transform windBase;
-    /*public void OnTriggerStay(Collider collid)
+    private Transform Player;
+
+    public void OnTriggerStay(Collider collid)
     {
         if (collid.attachedRigidbody)
         {
-            collid.attachedRigidbody.AddForce(windBase.up * windForce);
-            Debug.DrawRay(playerPos.position, windBase.up, Color.red);
-            Debug.Log("rayDisplay");
+            collid.attachedRigidbody.velocity = windBase.up * windForce;
         }
-    }*/
-
-    public void OnTriggerEnter(Collider collid)
+    }
+    public void OnTriggerExit(Collider collid)
+    {
+        if (collid.attachedRigidbody)
+        {
+            collid.attachedRigidbody.velocity = windBase.up * windForce * 0.25f;
+        }
+    }
+    /*public void OnTriggerEnter(Collider collid)
     {
         if (collid.attachedRigidbody && collid.CompareTag("Player"))
         {
             
-            collid.attachedRigidbody.AddForce(windBase.up * windForce);
+            collid.attachedRigidbody.AddForce(windBase.up * windForce * 2);
         }
-    }
+    }*/
 }
    
 
