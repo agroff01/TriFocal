@@ -5003,10 +5003,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3be110ed055fdff46bb9fa8524df15cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Normal: 1
+  Normal: 0
   Red: 0
   Green: 0
-  Blue: 0
+  Blue: 1
   greenVineGrowthMat: {fileID: 0}
 --- !u!114 &3816902641707757642
 MonoBehaviour:
