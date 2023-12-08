@@ -11,14 +11,19 @@ public class IslandFall : MonoBehaviour
     public float minSeconds = 0;
     public float maxSeconds = 100;
 
+    private float distance;
+
     // Update is called once per frame
     void Update()
     {
         //make sure doesn't start till all lenses are collected
         if(ColorManager.allLensesCollected)
         {
-            Debug.Log("All lenses gone");
             StartCoroutine(Falling());
+        }
+        if(gameObject.transform.position.y < distance - 20)
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -28,9 +33,12 @@ public class IslandFall : MonoBehaviour
         float randomTime = Random.Range(minSeconds, maxSeconds);
         yield return new WaitForSecondsRealtime(randomTime);
 
+        float distance = gameObject.transform.position.y;
+
         //island is falling
         rb = GetComponent<Rigidbody>();
         rb.isKinematic = false;
-        
+
+
     }
 }
