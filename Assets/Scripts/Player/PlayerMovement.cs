@@ -97,7 +97,6 @@ public class PlayerMovement : MonoBehaviour
             if (canControl)
             {
                 if(movement != new Vector3(0.0f ,0.0f ,0.0f)){
-                    Debug.Log(currentMoveSpeed);
                     rb.AddForce(movement * currentMoveSpeed * (!isGrounded ? airMultiplier : 1));
                 }
             }
