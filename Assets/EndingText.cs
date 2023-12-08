@@ -21,7 +21,7 @@ public class EndingText : MonoBehaviour
         foreach (var txt in text)
         {
             Color textColor = txt.color;
-            textColor.a = 0f; // Set alpha to 0 for initial fade-in
+            textColor.a = 0f;
             txt.color = textColor;
         }
     }
@@ -31,6 +31,7 @@ public class EndingText : MonoBehaviour
         if (ColorManager.allLensesCollected && !flag)
         {
             StartCoroutine(PrintTexts());
+            //only run once flag
             flag = true;
         }
     }
@@ -39,9 +40,11 @@ public class EndingText : MonoBehaviour
     {
         while (currentIndex < 4)
         {
-            yield return StartCoroutine(FadeText(text[currentIndex], 1f, delayBetweenTexts / 2f)); // Fade in
-            yield return new WaitForSeconds(delayBetweenTexts / 2f); // Wait for half of the delay
-            yield return StartCoroutine(FadeText(text[currentIndex], 0f, delayBetweenTexts / 2f)); // Fade out
+            //fade in
+            yield return StartCoroutine(FadeText(text[currentIndex], 1f, delayBetweenTexts / 2f));
+            yield return new WaitForSeconds(delayBetweenTexts / 2f);
+            //fade out
+            yield return StartCoroutine(FadeText(text[currentIndex], 0f, delayBetweenTexts / 2f));
             currentIndex++;
         }
     }
@@ -59,7 +62,7 @@ public class EndingText : MonoBehaviour
             yield return null;
         }
 
-        textColor.a = targetAlpha; // Ensure alpha is set to the target value
+        textColor.a = targetAlpha;
         txt.color = textColor;
     }
 }
