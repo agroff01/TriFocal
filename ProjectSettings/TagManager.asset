@@ -10,6 +10,7 @@ TagManager:
   - BlueLens
   - GreenLens
   - Vine
+  - Computer
   layers:
   - Default
   - TransparentFX

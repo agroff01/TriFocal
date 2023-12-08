@@ -1434,6 +1434,7 @@ MonoBehaviour:
   fadeImage: {fileID: 1986944261}
   fadeDuration: 3
   delayBeforeTransition: 25
+  SceneName: GameScene
 --- !u!114 &1080460067
 MonoBehaviour:
   m_ObjectHideFlags: 0
