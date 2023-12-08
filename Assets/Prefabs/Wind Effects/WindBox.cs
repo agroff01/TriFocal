@@ -10,7 +10,7 @@ public class WindBox : MonoBehaviour
 
     public void OnTriggerStay(Collider collid)
     {
-        if (collid.attachedRigidbody)
+        if (collid.attachedRigidbody && collid.tag == "Player")
         {
             collid.attachedRigidbody.velocity = windBase.up * windForce;
         }
